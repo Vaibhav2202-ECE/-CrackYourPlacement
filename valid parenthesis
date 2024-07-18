@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool isValid(string s) {
+
+        stack<int>st;
+        for(int i=0;i<s.size();i++){
+            //opening bracket hai toh stack me push kar do
+            if(s[i]=='(' || s[i]=='{' || s[i]=='['){
+                st.push(s[i]);
+            }
+            else{
+                //agar nahi hai toh 2 condition pehla agar empty hai 
+                //toh false return kar do nahi toh yadi closing bracket apne 
+                //opening bracket se match kar gaya toh pop kar do
+                if(st.empty()){
+                    return false;
+                }
+                else{
+                char ch=s[i];
+                if((st.top()=='(' && ch==')' ) || (st.top()=='{' && ch=='}') || (st.top()=='[' && ch==']'))
+                {
+                    st.pop();
+                }
+                else{
+                    st.push(ch);
+                }
+                }
+            }
+        }
+        if(!st.empty()){
+        return false;
+        }
+        else{
+        return true;
+        }
+    }
+};
