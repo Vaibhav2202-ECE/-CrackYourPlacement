@@ -1,0 +1,24 @@
+void sortList(Node *head) {
+
+  Node *current = head;
+  while (current != nullptr) {
+    count[current->data]++;
+    current = current->next;
+  }
+  current = head;
+  int i = 0;
+  while (current != nullptr) {
+    if (count[i] == 0) 
+    {
+      i++;
+    } 
+    else 
+    {
+
+      current->data = i;
+      count[i]--;
+      current = current->next;
+
+    }
+  }
+}
