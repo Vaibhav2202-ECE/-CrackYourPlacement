@@ -1,0 +1,54 @@
+class Solution {
+public:
+unordered_map<int,bool>rowcheck;
+unordered_map<int,bool>bottomright;
+unordered_map<int,bool>bottomleft;
+
+    bool isSafe(vector<string> &board, int row, int col, int n) {
+
+        if(rowcheck[row] == true )
+            return false;   
+        if(bottomright[n-1+col-row] == true)
+            return false;
+        if(bottomleft[row+col] == true)
+            return false;
+
+        return true;
+    }
+     void solve( int col,vector<vector<string>> &ans, vector<string> &board,int n){
+
+        if(col==n){
+            ans.push_back(board);
+            return;
+        }
+        for(int row = 0 ; row<n; row++){
+            if(isSafe(board,row,col,n)){
+                // action
+                board[row][col] = 'Q';
+                rowcheck[row] = true;
+                bottomright[n-1+col-row] = true;
+                bottomleft[row+col] = true;
+
+                //recursive 
+                solve(col+1,ans,board, n);
+                //backtrack
+                board[row][col] = '.';
+                rowcheck[row] = false;
+                bottomright[n-1+col-row] = false;
+                bottomleft[row+col] = false;
+            }
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>>ans;
+        vector<string>board(n);
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+            board[i].push_back('.');
+        }
+        }
+        int col=0;
+        solve(col,ans,board,n);
+        return ans;
+    }
+};
