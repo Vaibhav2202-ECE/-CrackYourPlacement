@@ -1,0 +1,97 @@
+private:
+    bool safe(int x,int y,int n,vector<vector<int>> &m,vector<vector<int>> visited)
+    {
+        if((x>=0 && x<n) && (y>=0 && y<n) && visited[x][y]==0 && m[x][y]==1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    void solve(vector<vector<int>> &m,vector<vector<int>> visited,vector<string> &ans,int n,int srcx,int srcy,string path)
+    {
+        
+        if(srcx==n-1 && srcy==n-1){
+            ans.push_back(path);
+            return;
+        }
+        
+        visited[srcx][srcy]=1;
+        
+        // path followed is DLRU(down,left,right,up)
+        //down
+        
+        int srcx1=srcx+1;
+        int srcy1=srcy;
+        if(safe(srcx1,srcy1,n,m,visited)){
+            
+            path.push_back('D');
+            solve(m,visited,ans,n,srcx1,srcy1,path);
+            path.pop_back();
+            
+        }
+        
+        //left
+        
+        srcx1=srcx;
+        srcy1=srcy-1;
+        if(safe(srcx1,srcy1,n,m,visited)){
+            
+            path.push_back('L');
+            solve(m,visited,ans,n,srcx1,srcy1,path);
+            path.pop_back();
+            
+        }
+        
+        //right
+        
+        srcx1=srcx;
+        srcy1=srcy+1;
+        if(safe(srcx1,srcy1,n,m,visited)){
+            
+            path.push_back('R');
+            solve(m,visited,ans,n,srcx1,srcy1,path);
+            path.pop_back();
+            
+        }
+        
+        //up
+        
+        srcx1=srcx-1;
+        srcy1=srcy;
+        if(safe(srcx1,srcy1,n,m,visited)){
+            
+            path.push_back('U');
+            solve(m,visited,ans,n,srcx1,srcy1,path);
+            path.pop_back();
+            
+        }
+        
+        visited[srcx][srcy]=0;
+        
+    }
+    public:
+    vector<string> findPath(vector<vector<int>> &m, int n) {
+        // Your code goes here
+        vector<string>ans;
+        if(m[0][0]==0)
+        {
+            return ans;
+        }
+        
+        int srcx=0;
+        int srcy=0;
+        
+        vector<vector<int>> visited=m;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                visited[i][j]=0;
+            }
+        }
+        string path="";
+        solve(m,visited,ans,n,srcx,srcy,path);
+        
+        sort(ans.begin(),ans.end());
+        return ans;
+        
+    }

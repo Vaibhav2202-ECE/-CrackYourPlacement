@@ -1,0 +1,28 @@
+class Solution {
+private:
+    void dfs(int sr,int sc,vector<vector<int>>& ans,vector<vector<int>>& image,int initial,int newcolor){
+             
+             ans[sr][sc]=newcolor;
+             int n=image.size();
+             int m=image[0].size();
+             int delrow[]={-1,0,1,0};
+             int delcol[]={0,1,0,-1};
+             for(int i=0;i<4;i++){
+                int nrow=sr+delrow[i];
+                int ncol=sc+delcol[i];
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && image[nrow][ncol]==initial
+                && ans[nrow][ncol]!=newcolor){
+                    dfs(nrow,ncol,ans,image,initial,newcolor);
+                }
+            }
+
+    }
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        
+        int initial=image[sr][sc];
+        vector<vector<int>>ans=image;
+        dfs(sr,sc,ans,image,initial,color);
+        return ans;
+    }
+};
