@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int solve(vector<int> &coins, int amount,vector<int> &dp){
+      if (amount == 0) return 0; // Base case: no coins needed for amount 0
+        if (dp[amount] != -1) return dp[amount]; // Return cached result
+        
+        int n = coins.size();
+        int ans = INT_MAX; // Initialize to a large number
+        
+        for (int j = 0; j < n; j++) {
+            if (amount - coins[j] >= 0) {
+                int subproblem = solve(coins, amount - coins[j], dp);
+                if (subproblem != INT_MAX) { // Check if the subproblem has a valid solution
+                    ans = min(ans, subproblem + 1);
+                }
+            }
+        }
+        dp[amount] = (ans == INT_MAX) ? -1 : ans;
+        return dp[amount];
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        int n=coins.size();
+        vector<int>dp(amount+1,-1);
+        return solve(coins,amount,dp);
+    }
+};

@@ -1,0 +1,8 @@
+ vector<int> dpMin(nums), dpMax(nums);
+        int ans = nums[0];
+        for(int i = 1; i < size(nums); i++) {
+            dpMin[i] = min(nums[i], nums[i] * (nums[i] >= 0 ? dpMin[i-1] : dpMax[i-1]));
+            dpMax[i] = max(nums[i], nums[i] * (nums[i] >= 0 ? dpMax[i-1] : dpMin[i-1]));
+            ans = max(ans, dpMax[i]);
+        }
+        return ans;
