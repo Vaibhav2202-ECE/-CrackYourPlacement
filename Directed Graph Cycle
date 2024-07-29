@@ -1,0 +1,38 @@
+bool dfs(int node, vector<int>adj[],
+    unordered_map<int,bool>&Visited, unordered_map<int,bool>&dfsVisited){
+        
+        Visited[node]=true;
+        dfsVisited[node]=true;
+        
+        for(auto neighbour:adj[node])
+        {
+            if(!Visited[neighbour]){
+                bool cycledetected=dfs(neighbour,adj,Visited,dfsVisited);
+                if(cycledetected){
+                    return true;
+                }
+            }
+            else if(dfsVisited[neighbour]){
+                //visited neighbour true
+                return true;
+            }
+        }
+        dfsVisited[node]=false;
+        return false;
+    }
+    bool isCyclic(int V, vector<int> adj[]) {
+        
+        unordered_map<int,bool>Visited;
+        unordered_map<int,bool>dfsVisited;
+        
+        for(int i=0;i<V;i++)
+        {
+            if(!Visited[i]){
+               bool ans= dfs(i,adj,Visited,dfsVisited);
+               if(ans){
+                   return true;
+               }
+            }
+        }
+        return false;
+    }

@@ -1,0 +1,43 @@
+bool isCyclic(int node, vector<int> &adj, unordered_map<int,bool>&visited)
+    {
+        unordered_map<int,int>parent;
+        queue<int>q;
+        parent[node]=-1;
+        visited[node]=1;
+        q.push(node);
+        while(!q.empty())
+        {
+            int front=q.front();
+            q.pop();
+            for(auto neighbour:adj[front]){
+            if(visited[neighbour]==true && neighbour!=parent[front])
+            {
+                return true;
+            }
+            else if(!visited[neighbour])
+            {
+                q.push(neighbour);
+                visited[neighbour]=true;
+                parent[neighbour]=front;
+            }
+            }
+        }
+        return false;
+    }
+    bool isCycle(int V, vector<int> adj[]) {
+        unordered_map<int,bool>visited;
+        //int E=adj.size();
+        for(int i=0;i<V;i++){
+            int u=adj[i][0];
+            int v=adj[i][1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        for(int i=0;i<V;i++){
+            if(isCyclic(i,adj,visited))
+            {
+                return 1;
+            }
+        }
+        return 0;
+    }
