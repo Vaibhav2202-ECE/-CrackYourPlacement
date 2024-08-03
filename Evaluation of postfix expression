@@ -1,0 +1,28 @@
+int perform_operation(int operand1,int operand2,char operation){
+        switch(operation){
+            case '+':return operand2+operand1;
+            case '-':return operand2-operand1;
+            case '*':return operand2*operand1;
+            case '/':return operand2/operand1;
+        }
+    }
+    int evaluatePostfix(string s)
+    {
+        stack<int>st;
+        int n=s.size();
+        
+        for(auto ch:s){
+            if(isdigit(ch)){
+                st.push(ch-'0');
+            }
+            else{
+                int x=st.top();
+                st.pop();
+                int y=st.top();
+                st.pop();
+                int ans=perform_operation(x,y,ch);
+                st.push(ans);
+            }
+        }
+        return st.top();
+    }
