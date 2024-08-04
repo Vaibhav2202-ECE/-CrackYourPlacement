@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<vector<int>>output;
+    void recursion(int ind,vector<int> &temp,vector<int> nums,int n) {
+        if(ind==n){
+                output.push_back(temp);
+                return;
+            }
+            temp.push_back(nums[ind]);
+            recursion(ind+1,temp,nums,n);
+            temp.pop_back();
+            recursion(ind+1,temp,nums,n);
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        int n = nums.size();
+        vector<int>temp;
+        recursion(0,temp,nums,n);
+        return output;
+    }
+};
