@@ -1,0 +1,24 @@
+bool dfs(TreeNode* node, int sum, vector<int>& path, vector<vector<int>>& result) {
+        if (!node) return false;
+
+        path.push_back(node->val);
+
+        if (!node->left && !node->right && sum == node->val) {
+            result.push_back(path);
+            path.pop_back();  // Backtrack here
+            return true;
+        } 
+
+        bool left = dfs(node->left, sum - node->val, path, result);
+        bool right = dfs(node->right, sum - node->val, path, result);
+
+        path.pop_back();  // Backtrack here
+
+        return left || right;
+    }
+
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        vector<vector<int>> result;
+        vector<int> path;
+        return dfs(root, targetSum, path, result);
+    }
