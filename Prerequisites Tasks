@@ -1,0 +1,36 @@
+bool isPossible(int N,int P, vector<pair<int, int>>& prerequisites) {
+	    vector<vector<int>>adj(N);
+	    for(int i=0;i<P;i++)
+	    {
+	        int first=prerequisites[i].first;
+	        int second=prerequisites[i].second;
+	        adj[first].push_back(second);
+	       
+	    }
+	    vector<int>indegree(N,0);
+	    for(int i=0;i<N;i++)
+	    {
+	        for(auto it:adj[i]){
+	            indegree[it]++;
+	        }
+	    }
+	    queue<int>q;
+	    vector<int>topo;
+	    for(int i=0;i<N;i++)
+	    {
+	      if(indegree[i]==0)q.push(i);
+	    }
+	    while(!q.empty()){
+	        int node=q.front();
+	        q.pop();
+	        topo.push_back(node);
+	        for(auto it:adj[node]){
+	            indegree[it]--;
+	            if(indegree[it]==0){
+	                q.push(it);
+	            }
+	        }
+	    }
+	    if(topo.size()==N)return true;
+	    else return false;
+	}

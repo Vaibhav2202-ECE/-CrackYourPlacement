@@ -1,0 +1,54 @@
+void dfs(int node,vector<bool>&vis,vector<vector<int>>&adj,stack<int>&st){
+	    vis[node]=true;
+	    for(auto nbr:adj[node]){
+	        if(!vis[nbr]){
+	            dfs(nbr,vis,adj,st);
+	        }
+	    }
+	    st.push(node);
+	}
+	
+	void revdfs(int node,vector<vector<int>>&adj,vector<bool>&vis){
+	    vis[node]=true;
+	    for(auto nbr:adj[node]){
+	        if(!vis[nbr]){
+	            revdfs(nbr,adj,vis);
+	        }
+	    }
+	}
+	
+    int kosaraju(int V, vector<vector<int>>& adj)
+    {
+       vector<bool>vis(V,false);
+       stack<int>st;
+       
+       for(int i=0;i<V;i++){
+           if(!vis[i]){
+               dfs(i,vis,adj,st);
+           }
+       }
+       
+       //find transpose of graph
+       vector<vector<int>>transpose(V);
+       for(int i=0;i<V;i++)
+       {
+           for(auto it:adj[i]){
+               transpose[it].push_back(i);
+           }
+       }
+       
+       // Apply dfs on this transpose list to find number of SCC
+       int count=0;
+       vis=vector<bool>(V,false);
+       while(!st.empty())
+       {
+           int t=st.top();
+           st.pop();
+           if(!vis[t])
+           {
+               count++;
+               revdfs(t,transpose,vis);
+           }
+       }
+       return count;
+    }
