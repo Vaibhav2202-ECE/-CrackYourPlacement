@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int getLength(ListNode* head,int k){
+        int c=0;
+        while(head!=NULL){
+            c++;
+            head=head->next;
+        }
+        return c;
+    }
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        
+        //base case
+        if(head==NULL || head->next==NULL)
+        return head;
+        //reverse first k nodes
+        ListNode* prev=NULL;
+        ListNode* aage=NULL;
+        ListNode* curr=head;
+        int count=0;
+        while(curr!=NULL && count<k){
+            aage=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=aage;
+            count++;
+        }
+        // recursion dekh lega aage ka
+        if(aage!=NULL)
+        {
+        if(getLength(aage,k)>=k)
+        {
+        head->next=reverseKGroup(aage,k);
+        }
+        else
+        {
+            head->next=aage;
+        }
+        }
+        return prev;
+    }
+};
