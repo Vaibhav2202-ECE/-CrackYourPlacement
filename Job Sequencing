@@ -1,0 +1,28 @@
+vector<int> JobScheduling(Job arr[], int n) 
+    { 
+        sort(arr,arr+n,comp);
+        int maxdeadline=arr[0].dead;
+        for(int i=1;i<n;i++)
+        {
+            maxdeadline=max(maxdeadline,arr[i].dead);
+        }
+        int hash[maxdeadline+1]={-1};
+        int count=0;
+        int totalprofit=0;
+        vector<int>ans;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=arr[i].dead;j>0;j--){
+                if(hash[j]==-1)
+                {
+                    hash[j]=i;
+                    count++;
+                    totalprofit+=arr[i].profit;
+                    break;
+                }
+            }
+        }
+        ans.push_back(count);
+        ans.push_back(totalprofit);
+        return ans;
+    } 

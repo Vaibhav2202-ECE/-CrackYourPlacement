@@ -1,0 +1,17 @@
+Node* construct(int pre[],int size,int &idx,int min,int max )
+    {
+        if(idx>=size)return nullptr;
+        if(pre[idx]<min || pre[idx]>max)return nullptr;
+        int val=pre[idx++];
+        
+        Node* root=newNode(val);
+        root->left=construct(pre,size,idx,min,root->data);
+        root->right=construct(pre,size,idx,root->data,max);
+        return root;
+    }
+    Node* Bst(int pre[], int size) {
+        
+        int idx=0;
+        Node* root=construct(pre,size,idx,INT_MIN,INT_MAX);
+        return root;
+    }

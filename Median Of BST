@@ -1,0 +1,23 @@
+void solve(Node* root,vector<int>&result)
+{
+    if(root==nullptr)return;
+    solve(root->left,result);
+    result.push_back(root->data);
+    solve(root->right,result);
+}
+float findMedian(struct Node *root)
+{
+      //Code here
+      float ans=0;
+      vector<int>result;
+      solve(root,result);
+      int n=result.size();
+      if(n%2==0)
+      {
+          ans=(result[n/2]+result[n/2-1])/2.0;
+      }
+      else{
+          ans=result[n/2];
+      }
+      return ans;
+}
