@@ -1,0 +1,28 @@
+  if (head == nullptr || head->next == nullptr) return head;
+
+        // Dummy node to handle edge cases
+        ListNode* dummy = new ListNode(0, head);
+        ListNode* prev = dummy;
+        ListNode* curr = head;
+
+        while (curr != nullptr) {
+            bool isDuplicate = false;
+
+            // Check if current node is a duplicate
+            while (curr->next != nullptr && curr->val == curr->next->val) {
+                isDuplicate = true;
+                curr = curr->next; // Skip the duplicate node
+            }
+
+            if (isDuplicate) {
+                // Skip all duplicates
+                prev->next = curr->next;
+            } else {
+                // Move prev pointer if no duplicates
+                prev = prev->next;
+            }
+
+            curr = curr->next; // Move to the next node
+        }
+
+        return dummy->next; 
