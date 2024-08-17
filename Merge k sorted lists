@@ -1,0 +1,33 @@
+class Solution {
+public:
+struct cmp{
+    bool operator()(ListNode* a,ListNode* b)
+    {
+        return a->val>b->val;
+    }
+};
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        
+        priority_queue< ListNode*,vector<ListNode*>,cmp >minheap;
+
+        for(auto list:lists){
+            if(list){
+            minheap.push(list);
+            }
+        }
+        ListNode* dummy=new ListNode(0);
+        ListNode* bottom=dummy;
+        while(!minheap.empty()){
+
+            ListNode* small=minheap.top();
+            minheap.pop();
+            bottom->next=small;
+            bottom=bottom->next;
+
+            if(small->next){
+                minheap.push(small->next);
+            }
+        }
+        return dummy->next;
+    }
+};
