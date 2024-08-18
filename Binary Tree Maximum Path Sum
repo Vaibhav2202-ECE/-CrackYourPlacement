@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int maximumSum(TreeNode* root,int &ans)
+    {
+        if(root==NULL){
+            return 0;
+        }
+
+        int leftsum=max(0,maximumSum(root->left,ans));
+        int rightsum=max(0,maximumSum(root->right,ans));
+        
+        //maximum sum when root is also included
+        int max_top=root->val+leftsum+rightsum;
+        ans=max(ans,max_top);
+
+        return root->val+max(leftsum,rightsum);
+
+    }
+    int maxPathSum(TreeNode* root) {
+        
+        int ans=INT_MIN;
+        maximumSum(root,ans);
+        return ans;
+
+
+    }
+};
