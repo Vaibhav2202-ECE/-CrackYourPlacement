@@ -1,0 +1,45 @@
+const vector<pair<int, int>> directions={{2, 1}, {2, -1}, {-2, 1}, {-2, -1},
+    {1, 2}, {1, -2}, {-1, 2}, {-1, -2}};
+    
+    bool isValid(int x,int y,int n){
+        if(x>=0 && x<n && y>=0 && y<n )return true;
+        return false;
+    }
+    
+	int minStepToReachTarget(vector<int>&src,vector<int>&dest,int n)
+	{
+	    queue<pair<pair<int,int>,int>>q;
+	    if(src==dest)return 0;
+	    
+	    q.push({{src[0],src[1]},0});
+	    
+	    vector<vector<bool>>vis(n,vector<bool>(n,false));
+	    vis[src[0]][src[1]]=true;
+	    
+	    while(!q.empty()){
+	        auto current=q.front();
+	        q.pop();
+	        
+	        int x=current.first.first;
+	        int y=current.first.second;
+	        int h=current.second;
+	        
+	        if(x==dest[0] && y==dest[1]) 
+	        {
+	            return h;
+	        }
+	        
+            for(auto dir:directions){
+                
+                int newX=x+dir.first;
+                int newY=y+dir.second;
+                
+                if(isValid(newX,newY,n) && !vis[newX][newY])
+                {
+                    vis[newX][newY]=true;
+                    q.push({{newX,newY},h+1});
+                }
+            }
+	    }
+	    return -1; 
+	}
